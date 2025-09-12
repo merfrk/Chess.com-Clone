@@ -18,9 +18,9 @@ extension View {
     }
 }
 struct ContentView: View {
-        var body: some View {
+    var body: some View {
         ZStack{
-
+            
             
             
             // Header
@@ -39,7 +39,7 @@ struct ContentView: View {
                     ScrollView(.horizontal, showsIndicators: false){
                         GameMode()
                     }
-                        .padding(.top, 16)
+                    .padding(.top, 16)
                     
                 }
                 .frame(maxWidth: .infinity)
@@ -67,76 +67,78 @@ struct ContentView: View {
 
 struct GameMode: View {
     var body: some View {
-//        ScrollView(.horizontal, showsIndicators: false){
-            HStack(){
-                VStack(spacing: 8){
-                    Text("Rapid")
-                    Image(systemName: "clock.fill")
-                    Text("822")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
-                VStack(spacing: 8){
-                    Text("Live960")
-                    Image(systemName: "clock.fill")
-                    Text("830")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
-                VStack(spacing: 8){
-                    Text("Daily")
-                    Image(systemName: "clock.fill")
-                    Text("800")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
-                VStack(spacing: 8){
-                    Text("Bullet")
-                    Image(systemName: "clock.fill")
-                    Text("800")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
-                VStack(spacing: 8){
-                    Text("Daily960")
-                    Image(systemName: "clock.fill")
-                    Text("800")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
-                VStack(spacing: 8){
-                    Text("Puzzles")
-                    Image(systemName: "clock.fill")
-                    Text("712")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
-                VStack(spacing: 8){
-                    Text("Blitz")
-                    Image(systemName: "clock.fill")
-                    Text("596")
-                }
-                .frame(width: 120, height: 120)
-                .padding(1)
-                .border(Color.green, width: 1)
-                
+        //        ScrollView(.horizontal, showsIndicators: false){
+        HStack(){
+            VStack(spacing: 8){
+                Text("Rapid")
+                Image("rapid")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                Text("822")
             }
-            .frame(height: 150)
-            .padding(.horizontal, 0)
-            .border(Color.gray, width: 1)
-//        }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+            VStack(spacing: 8){
+                Text("Live960")
+                Image(systemName: "clock.fill")
+                Text("830")
+            }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+            VStack(spacing: 8){
+                Text("Daily")
+                Image(systemName: "clock.fill")
+                Text("800")
+            }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+            VStack(spacing: 8){
+                Text("Bullet")
+                Image(systemName: "clock.fill")
+                Text("800")
+            }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+            VStack(spacing: 8){
+                Text("Daily960")
+                Image(systemName: "clock.fill")
+                Text("800")
+            }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+            VStack(spacing: 8){
+                Text("Puzzles")
+                Image(systemName: "clock.fill")
+                Text("712")
+            }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+            VStack(spacing: 8){
+                Text("Blitz")
+                Image(systemName: "clock.fill")
+                Text("596")
+            }
+            .frame(width: 120, height: 120)
+            .padding(1)
+            .border(Color.green, width: 1)
+            
+        }
+        .frame(height: 150)
+        .padding(.horizontal, 0)
+        .border(Color.gray, width: 1)
+        //        }
     }
 }
 struct PlayButton: View {
@@ -282,8 +284,8 @@ struct NextLessonCard: View {
                 
                 Spacer()
                 
-                // Lesson Icon
-                Image(systemName: "graduationcap.fill")
+                // Lesson Icon graduationcap.fill
+                Image("cap")
                     .resizable()
                     .frame(width: 56, height: 56)
                     .foregroundColor(Color(hex: "4A90E2"))
@@ -302,12 +304,13 @@ struct NextLessonCard: View {
 
 struct CustomTabBar: View {
     var body: some View {
+        
         HStack(spacing: 0) {
-            TabBarItem(icon: "book.fill", label: "Home", isSelected: true)
-            TabBarItem(icon: "puzzlepiece.fill", label: "Puzzles", isSelected: false)
-            TabBarItem(icon: "book.fill", label: "Learn", isSelected: false)
-            TabBarItem(icon: "play.circle.fill", label: "Watch", isSelected: false)
-            TabBarItem(icon: "line.horizontal.3", label: "More", isSelected: false)
+            TabBarItem(icon: Image("greenpawn"), label: "Home", isSelected: false)
+            TabBarItem(icon: Image(systemName: "puzzlepiece.extension.fill"), label: "Puzzles", isSelected: false)
+            TabBarItem(icon: Image(systemName: "graduationcap.fill" ), label: "Learn", isSelected: false)
+            TabBarItem(icon: Image(systemName: "binoculars.fill"), label: "Watch", isSelected: false)
+            TabBarItem(icon: Image(systemName: "line.horizontal.3"), label: "More", isSelected: false)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 8)
@@ -318,13 +321,16 @@ struct CustomTabBar: View {
 
 
 struct TabBarItem: View {
-    let icon: String
+    let icon: Image
     let label: String
     let isSelected: Bool
     
     var body: some View {
         VStack(spacing: 4) {
-            Image(systemName: icon)
+            icon
+                .resizable()
+                .scaledToFit()
+                .frame(width: 22, height: 22)
                 .font(.system(size: 22))
                 .foregroundColor(isSelected ? Color(hex: "81B64C") : Color.gray)
             
