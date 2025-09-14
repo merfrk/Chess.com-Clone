@@ -17,40 +17,65 @@ extension View {
         )
     }
 }
+
 struct ContentView: View {
     var body: some View {
         ZStack{
             
-            
-            
-            // Header
-            
-            ScrollView{
-                VStack(alignment: .leading){
-                    // Solve puzzle
-                    SolvePuzzlesCard()
-                    // Daily puzzle
-                    DailyPuzzleCard()
-                    // Next lesson
-                    NextLessonCard()
-                    
-                    
-                    // game modes
-                    ScrollView(.horizontal, showsIndicators: false){
-                        GameMode()
+            NavigationStack{
+                
+                ScrollView{
+                    VStack(spacing: 16){
+                        
+                        // Solve puzzle
+                        SolvePuzzlesCard()
+                        // Daily puzzle
+                        DailyPuzzleCard()
+                        // Next lesson
+                        NextLessonCard()
+                        
+                        
+                        // game modes
+                        ScrollView(.horizontal, showsIndicators: false){
+                            GameMode()
+                        }
+                        
+                        Color.clear.frame(height: 140)
                     }
-                    .padding(.top, 16)
+                    .frame(maxWidth: .infinity)
                     
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.top, 8)
+                .background(Color.gray.opacity(0.15))
+                .toolbar{
+                    ToolbarItem(placement: .navigationBarLeading){
+                        HStack(spacing: 20) {
+                            Image("pawn")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                            Image("thropy")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                        }
+                    }
+                    ToolbarItem(placement: .principal) {
+                        Image("chesslogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 22)
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Image("friends")
+                            .resizable()
+                            .frame(width: 22, height: 22)
+                    }
+                    
+                }
                 
-                
-                
-            }
-            .frame(maxWidth: .infinity)
+                        }
             
             VStack{
+                
                 Spacer()
                 // Play button
                 PlayButton()
@@ -65,80 +90,107 @@ struct ContentView: View {
     }
 }
 
+struct headerSection: View {
+    var body: some View{
+        HStack(spacing: 20){
+            HStack{
+                Image("pawn")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 22, height: 22)
+                
+                Image("thropy")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 22, height: 22)
+            }
+            Spacer()
+            
+            Image("chesslogo")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 22, height: 22)
+            
+            Spacer()
+            
+            Image("friends")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 22, height: 22)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        
+    }
+}
 struct GameMode: View {
     var body: some View {
-        //        ScrollView(.horizontal, showsIndicators: false){
         HStack(){
             VStack(spacing: 8){
                 Text("Rapid")
+                    .foregroundColor(.gray)
                 Image("rapid")
                     .resizable()
                     .frame(width: 50, height: 50)
                 Text("822")
+                    .foregroundColor(.white)
             }
             .frame(width: 120, height: 120)
             .padding(1)
-            .border(Color.green, width: 1)
             
             VStack(spacing: 8){
                 Text("Live960")
-                Image(systemName: "clock.fill")
+                    .foregroundColor(.gray)
+                Image("chess960")
                 Text("830")
+                    .foregroundColor(.white)
             }
             .frame(width: 120, height: 120)
             .padding(1)
-            .border(Color.green, width: 1)
-            
-            VStack(spacing: 8){
-                Text("Daily")
-                Image(systemName: "clock.fill")
-                Text("800")
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            .border(Color.green, width: 1)
             
             VStack(spacing: 8){
                 Text("Bullet")
-                Image(systemName: "clock.fill")
+                    .foregroundColor(.gray)
+                Image("bullet")
                 Text("800")
+                    .foregroundColor(.white)
             }
             .frame(width: 120, height: 120)
             .padding(1)
-            .border(Color.green, width: 1)
             
             VStack(spacing: 8){
                 Text("Daily960")
-                Image(systemName: "clock.fill")
+                    .foregroundColor(.gray)
+                Image("chess960")
                 Text("800")
+                    .foregroundColor(.white)
             }
             .frame(width: 120, height: 120)
             .padding(1)
-            .border(Color.green, width: 1)
             
             VStack(spacing: 8){
                 Text("Puzzles")
-                Image(systemName: "clock.fill")
+                    .foregroundColor(.gray)
+                Image("rush")
                 Text("712")
+                    .foregroundColor(.white)
             }
             .frame(width: 120, height: 120)
             .padding(1)
-            .border(Color.green, width: 1)
             
             VStack(spacing: 8){
                 Text("Blitz")
-                Image(systemName: "clock.fill")
+                    .foregroundColor(.gray)
+                Image("blitz")
                 Text("596")
+                    .foregroundColor(.white)
             }
             .frame(width: 120, height: 120)
             .padding(1)
-            .border(Color.green, width: 1)
             
         }
         .frame(height: 150)
         .padding(.horizontal, 0)
-        .border(Color.gray, width: 1)
-        //        }
     }
 }
 struct PlayButton: View {
@@ -193,7 +245,6 @@ struct DailyPuzzleCard: View {
             
         }
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-        .background(Color.black.opacity(0.4))
         .padding(.leading, 0)
         
     }
@@ -226,8 +277,9 @@ struct SolvePuzzlesCard: View {
                             .font(.system(size: 36))
                             .foregroundColor(Color(hex: "CD7F32"))
                         Text("13")
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.system(size: 22, weight: .heavy))
                             .foregroundColor(.white)
+                        
                     }
                     
                     Text("2012")
@@ -259,7 +311,6 @@ struct SolvePuzzlesCard: View {
             
         }
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-        .background(Color.black.opacity(0.4))
         .padding(.leading, 0)
     }
 }
@@ -296,7 +347,6 @@ struct NextLessonCard: View {
             
         }
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-        .background(Color.black.opacity(0.4))
         .padding(.leading, 0)
         
     }

@@ -17,7 +17,7 @@ struct ChessView: View {
             VStack(spacing: 0) {
                 
                 // Header
-                HeaderSection()
+                HeaderSection1()
                 
                 // Scrollable Content
                 ScrollView(showsIndicators: false) {
@@ -57,7 +57,7 @@ struct ChessView: View {
 
 
 // MARK: - Header Section
-struct HeaderSection: View {
+struct HeaderSection1: View {
     var body: some View {
         HStack(spacing: 20) {
             // Profile Icon
@@ -94,7 +94,7 @@ struct HeaderSection: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color(hex: "1F1C19"))
+        .background(Color(hex: "1F1C19").opacity(0.5))
     }
 }
 
