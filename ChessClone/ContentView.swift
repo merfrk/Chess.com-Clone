@@ -154,7 +154,7 @@ struct ContentView: View {
                                 // Blur efekti
                                 VisualEffectBlur(blurStyle: .systemUltraThinMaterialDark)
                             }
-                            .edgesIgnoringSafeArea(.bottom)   
+                            .edgesIgnoringSafeArea(.bottom)
                     )
                     
                 }
@@ -254,7 +254,7 @@ struct DailyPuzzleCard: View {
             Image("puzzle1")
                 .resizable()
                 .frame(width: 150, height: 150)
-                .padding(.leading)
+                .border(Color("borderColor"), width: 4)
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("Daily Puzzle")
@@ -267,7 +267,7 @@ struct DailyPuzzleCard: View {
                     Text("Solved by 1,378,585")
                         .font(.system(size: 16))
                 }
-                .foregroundColor(Color.gray)
+                .foregroundColor(Color("textColor"))
                 
                 Spacer()
                 
@@ -281,12 +281,14 @@ struct DailyPuzzleCard: View {
                             .foregroundColor(Color(hex: "81B64C"))
                     )
             }
+            .padding(.top, 8)
+            .padding(.bottom, 16)
             
             
             
         }
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-        .padding(.leading, 0)
+        .padding(.leading)
         
     }
 }
@@ -298,16 +300,16 @@ struct SolvePuzzlesCard: View {
             Image("puzzle2")
                 .resizable()
                 .frame(width: 150, height: 150)
-                .padding(.leading)
+                .border(Color("borderColor"), width: 4)
             
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text("Solve Puzzles")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.white)
                 
                 Text("Continue Your Journey!")
                     .font(.system(size: 14))
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color("textColor"))
                 
                 Spacer()
                 
@@ -351,15 +353,17 @@ struct SolvePuzzlesCard: View {
                     }
                 }
                 .padding(.bottom, 12)
-                
-                
             }
+            .padding(.top)
             
             
             
         }
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-        .padding(.leading, 0)
+        .padding(.leading)
+//        99
+//        87
+//        82
     }
 }
 
@@ -370,16 +374,16 @@ struct NextLessonCard: View {
             Image("standardboard")
                 .resizable()
                 .frame(width: 150, height: 150)
-                .padding(.leading)
+                .border(Color("borderColor"), width: 4)
             
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text("Next Lesson")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.white)
                 
                 Text("The Goals Of Chess")
                     .font(.system(size: 14))
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color("textColor"))
                 
                 Spacer()
                 
@@ -395,7 +399,7 @@ struct NextLessonCard: View {
             
         }
         .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-        .padding(.leading, 0)
+        .padding(.leading)
         
     }
 }
