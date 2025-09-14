@@ -4,7 +4,7 @@
 //
 //  Created by Omer on 11.09.2025.
 //
-
+import UIKit
 import SwiftUI
 
 extension View {
@@ -17,13 +17,40 @@ extension View {
         )
     }
 }
+struct AdjustableBlurView: UIViewRepresentable {
+    var style: UIBlurEffect.Style
+    var intensity: CGFloat // 0.0 - 1.0
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        let blurEffect = UIBlurEffect(style: style)
+        let effectView = UIVisualEffectView(effect: nil)
+        
+        // UIVisualEffectView üzerinde animasyonla intensity uygulayacağız
+        DispatchQueue.main.async {
+            effectView.effect = blurEffect
+            effectView.alpha = intensity
+        }
+        
+        return effectView
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.alpha = intensity
+    }
+}
 
 struct ContentView: View {
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground() // veya .transparentBackground()
+        appearance.backgroundColor = UIColor.black.withAlphaComponent(0.55) // İstediğin renk
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
     var body: some View {
-        ZStack{
-            
-            NavigationStack{
-                
+        
+        NavigationStack{
+            ZStack{
                 ScrollView{
                     VStack(spacing: 16){
                         
@@ -69,24 +96,27 @@ struct ContentView: View {
                             .resizable()
                             .frame(width: 22, height: 22)
                     }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                VStack{
+                    
+                    Spacer()
+                    // Play button
+                    VStack{
+                        PlayButton()
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 8)
+                        
+                        //Tabbar
+                        CustomTabBar()
+                    }
+                    .background(Color.black.opacity(0.3))
                     
                 }
                 
-                        }
-            
-            VStack{
-                
-                Spacer()
-                // Play button
-                PlayButton()
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
-                
-                //Tabbar
-                CustomTabBar()
             }
+            .backgroundImage( "wood")
         }
-        .backgroundImage( "wood")
     }
 }
 
@@ -123,76 +153,42 @@ struct headerSection: View {
         
     }
 }
+
 struct GameMode: View {
     var body: some View {
-        HStack(){
-            VStack(spacing: 8){
-                Text("Rapid")
-                    .foregroundColor(.gray)
-                Image("rapid")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                Text("822")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            
-            VStack(spacing: 8){
-                Text("Live960")
-                    .foregroundColor(.gray)
-                Image("chess960")
-                Text("830")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            
-            VStack(spacing: 8){
-                Text("Bullet")
-                    .foregroundColor(.gray)
-                Image("bullet")
-                Text("800")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            
-            VStack(spacing: 8){
-                Text("Daily960")
-                    .foregroundColor(.gray)
-                Image("chess960")
-                Text("800")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            
-            VStack(spacing: 8){
-                Text("Puzzles")
-                    .foregroundColor(.gray)
-                Image("rush")
-                Text("712")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            
-            VStack(spacing: 8){
-                Text("Blitz")
-                    .foregroundColor(.gray)
-                Image("blitz")
-                Text("596")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 120, height: 120)
-            .padding(1)
-            
+        HStack(spacing: 12) {
+            gameBox(title: "Rapid", imageName: "rapid", score: "822")
+            gameBox(title: "Live960", imageName: "chess960", score: "830")
+            gameBox(title: "Bullet", imageName: "bullet", score: "596")
+            gameBox(title: "Blitz", imageName: "blitz", score: "800")
+            gameBox(title: "Puzzles", imageName: "rush", score: "712")
+            gameBox(title: "Daily960", imageName: "chess960", score: "800")
         }
         .frame(height: 150)
-        .padding(.horizontal, 0)
+        .padding(.horizontal, 16)
+    }
+    
+    @ViewBuilder
+    func gameBox(title: String, imageName: String, score: String) -> some View {
+        VStack() {
+            Spacer()
+            Text(title)
+                .foregroundColor(.gray)
+            Spacer()
+            Image(imageName)
+                .resizable()
+                .frame(width: 40, height: 40)
+            Spacer()
+            Text(score)
+                .foregroundColor(.white)
+            Spacer()
+        }
+        .frame(width: 100, height: 100)
+        .padding(4)
+        .background(Color.black.opacity(0.2))
     }
 }
+
 struct PlayButton: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
@@ -200,7 +196,7 @@ struct PlayButton: View {
             .frame(height: 56)
             .overlay(
                 Text("Play")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 22, weight: .black))
                     .foregroundColor(.white)
             )
     }
@@ -222,9 +218,9 @@ struct DailyPuzzleCard: View {
                 
                 HStack(spacing: 6) {
                     Image(systemName: "person.2.fill")
-                        .font(.system(size: 12))
+                        .font(.system(size: 16))
                     Text("Solved by 1,378,585")
-                        .font(.system(size: 13))
+                        .font(.system(size: 16))
                 }
                 .foregroundColor(Color.gray)
                 
@@ -282,29 +278,36 @@ struct SolvePuzzlesCard: View {
                         
                     }
                     
-                    Text("2012")
-                        .font(.system(size: 20, weight: .black))
-                        .foregroundColor(.white)
-                    
-                    HStack(spacing: 4) {
-                        Image(systemName: "flame.fill")
-                            .foregroundColor(Color(hex: "FF6B35"))
-                        Text("27")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(Color(hex: "FF6B35"))
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("2012")
+                                .font(.system(size: 20, weight: .black))
+                                .foregroundColor(.white)
+                            
+                            HStack(spacing: 4) {
+                                Image(systemName: "flame.fill")
+                                    .foregroundColor(Color(hex: "FF6B35"))
+                                Text("27")
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(Color(hex: "FF6B35"))
+                            }
+                        }
+                        
+                        // Progress Bar
+                        ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 140,height: 16)
+                            
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color(hex: "FF6B35"))
+                                .frame(width: 100, height: 16)
+                        }
                     }
                 }
+                .padding(.bottom, 12)
                 
-                // Progress Bar
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(height: 8)
-                    
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color(hex: "FF6B35"))
-                        .frame(width: 120, height: 8)
-                }
+                
             }
             
             
@@ -365,7 +368,7 @@ struct CustomTabBar: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 8)
         .padding(.bottom, 4)
-        .background(Color(hex: "1F1C19"))
+        //        .background(Color(hex: "1F1C19"))
     }
 }
 
